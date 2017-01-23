@@ -1,0 +1,7 @@
+GET     /persons                    controllers.SampleController.selectAll
+GET     /persons/:id                controllers.SampleController.selectById(id: Int)
+POST    /persons                    controllers.SampleController.insert
+PUT     /persons                    controllers.SampleController.update
+DELETE  /persons/:id                controllers.SampleController.delete(id: Int)
+
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
