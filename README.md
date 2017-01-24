@@ -1,6 +1,8 @@
 Doma Play Sample
 ------------------
 
+[本家のKotlin サンプル](https://github.com/domaframework/kotlin-sample)をScalaに焼き直してPlay2上で動くようにしたものです。
+
 ### Build
 
 ```sh
@@ -10,7 +12,7 @@ Doma Play Sample
 ### Run
 
 ```sh
-./bin/activator clean run
+./bin/activator run
 ```
 
 Play開始後別コンソールにて
@@ -18,11 +20,11 @@ Play開始後別コンソールにて
 #DB作成
 curl http://localhost:9000/@evolutions/apply/default
 
-#検索
+#全件検索
 curl http://localhost:9000/persons
 
-#検索
-curl -X  http://localhost:9000/persons/1
+#1件検索
+curl http://localhost:9000/persons/1
 
 #登録
 curl -X POST -H "Content-Type: application/json" -d '{"name":"WARD","age":20,"address":{"city":"Fukuoka","street":"Gion"}}' http://localhost:9000/persons
