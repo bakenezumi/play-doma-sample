@@ -1,17 +1,17 @@
 lazy val root = (project in file(".")).enablePlugins(PlayScala).settings(
   inThisBuild(List(
-    scalaVersion := "2.11.7",
-    version := "1.0-SNAPSHOT"
+    scalaVersion := "2.12.2",
+    version := "0.1"
   )),
   name := "play-doma",
   libraryDependencies ++= Seq(
-    cache,
+    guice,
     ws,
     evolutions,
-    "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
-    "mysql" % "mysql-connector-java" % "5.1.26"
+    "com.h2database" % "h2" % "1.4.193",
+    "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test
   ),
-  unmanagedSourceDirectories in Compile <+= classDirectory in Compile in dao
+  unmanagedSourceDirectories in Compile += (classDirectory in Compile in dao).value
 ) dependsOn (dao, doma) aggregate (dao, doma)
 
 lazy val processAnnotations = taskKey[Unit]("Process annotations")
@@ -47,7 +47,7 @@ lazy val dao = project.settings(
 lazy val doma = project.settings(
   libraryDependencies ++= Seq(
     jdbc,
-    "org.seasar.doma" % "doma" % "2.14.0"
+    "org.seasar.doma" % "doma" % "2.16.1"
   )
 )
 

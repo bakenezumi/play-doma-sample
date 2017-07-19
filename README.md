@@ -6,13 +6,13 @@ Doma Play Sample
 ### Build
 
 ```sh
-./bin/activator clean dist
+./sbt clean dist
 ```
 
 ### Run
 
 ```sh
-./bin/activator run
+./sbt run
 ```
 
 Play開始後別コンソールにて
