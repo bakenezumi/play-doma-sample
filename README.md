@@ -6,7 +6,7 @@ Doma Play Sample
 ### Build
 
 ```sh
-./sbt clean dist
+./sbt clean dao/copyResources dist
 ```
 
 ### Run
@@ -15,10 +15,10 @@ Doma Play Sample
 ./sbt run
 ```
 
-Play開始後別コンソールにて
+Play開始後
 ```sh
 #DB作成
-curl http://localhost:9000/@evolutions/apply/default
+curl http://localhost:9000/@evolutions/apply/default?redirect=/persons
 
 #全件検索
 curl http://localhost:9000/persons
@@ -41,8 +41,17 @@ curl -X DELETE  http://localhost:9000/persons/2
 ----
 
 ### 注意点
-  いろいろあるけど後で書く
+- 注釈処理による自動生成をコンパイル中に実行する必要があるため、3プロジェクト構成になっています。詳細はbuild.sbtを参照。  
+  |プロジェクト|内容|
+  |:--|:--|
+  |domala|Scala用Domaラッパー|
+  |dao|注釈処理対象クラス|
+  |root (app)|Doma利用アプリケーション|
 
-### ドキュメント
-
-  未作成
+- ドメインクラス、エンベッダブルクラス、エンティティクラス、及びDaoインターフェース、SQLファイルはdaoプロジェクト内に配置しないと自動生成がうまく働きません。
+  - ドメインクラスはcase classで実装できます。（Name.scala参照）
+  - エンベッダブルクラスはcase classで実装できます。（Address.scala参照）
+  - エンティティクラスはcase classで実装できます。（Person.scala参照)
+  - case classで実装したエンティティクラスはscalaコンパイル時にフィールド名が消去されてしまうため各フィールドにはParameterNameアノテーションが必要です。(どうにかしたい。。)
+  - Daoインターフェースはtraitで実装できます。(PersonDao.scala参照)
+  - Daoインターフェースのメソッドはエンティティクラスと同様、パラメータの名称がコンパイル時に消去されるため、ParameterNameアノテーションが必要です。

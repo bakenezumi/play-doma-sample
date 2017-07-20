@@ -1,6 +1,5 @@
 package controllers
 
-import akka.actor.ActorSystem
 import javax.inject._
 
 import play.api.mvc._
@@ -11,20 +10,21 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.compat.java8.OptionConverters._
 
-import domala._
-import domala.ScalaDomaHelper._
+import domala.RequiredFuture
 
 import sample._
 
 import PersonConverter._
 
 @Singleton
-class SampleController @Inject() (actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
+class SampleController @Inject() (val controllerComponents: ControllerComponents)(implicit exec: ExecutionContext) extends BaseController {
 
   lazy val dao = new PersonDaoImpl
 
   def selectById(id: Int) = Action.async {
-    requiredFuture { () => dao.selectById(id) } map { result => 
+    RequiredFuture {
+      dao.selectById(id)
+    } map { result => 
       result.asScala match {
         case Some(person) => Ok(Json.toJson(person))
         case None => NotFound("not found.")
@@ -33,7 +33,9 @@ class SampleController @Inject() (actorSystem: ActorSystem)(implicit exec: Execu
   }
 
   def selectAll = Action.async {
-    requiredFuture { dao.selectAll } map { persons =>
+    RequiredFuture {
+      dao.selectAll() 
+    } map { persons =>
       Ok(Json.toJson(persons.asScala))
     }
   }
@@ -44,19 +46,23 @@ class SampleController @Inject() (actorSystem: ActorSystem)(implicit exec: Execu
   }
 
   def insert = Action.async { request => {
-    requiredFuture { () => dao.insert(request.asPerson) } map { result =>
+    RequiredFuture {
+      dao.insert(request.asPerson)
+    } map { result =>
       Ok(Json.toJson(result))
     }
   }}
 
   def update = Action.async { request => {
-    requiredFuture { () => dao.update(request.asPerson) } map { result =>
+    RequiredFuture {
+      dao.update(request.asPerson)
+    } map { result =>
       Ok(Json.toJson(result))
     }
   }}
 
   def delete(id: Int) = Action.async {
-    requiredFuture { () =>
+    RequiredFuture {
       val result = dao.selectById(id)
       result.asScala match {
         case Some(person) => dao.delete(person).getCount

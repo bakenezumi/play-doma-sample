@@ -1,9 +1,9 @@
 lazy val root = (project in file(".")).enablePlugins(PlayScala).settings(
   inThisBuild(List(
     scalaVersion := "2.12.2",
-    version := "0.1"
+    version := "0.1.0"
   )),
-  name := "play-doma",
+  name := "play-doma-sample",
   libraryDependencies ++= Seq(
     guice,
     ws,
@@ -12,7 +12,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala).settings(
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test
   ),
   unmanagedSourceDirectories in Compile += (classDirectory in Compile in dao).value
-) dependsOn (dao, doma) aggregate (dao, doma)
+) dependsOn (dao, domala) aggregate (dao, domala)
 
 lazy val processAnnotations = taskKey[Unit]("Process annotations")
 
@@ -42,9 +42,9 @@ lazy val dao = project.settings(
       copy
     }
   }).value
-) dependsOn doma
+) dependsOn domala
 
-lazy val doma = project.settings(
+lazy val domala = project.settings(
   libraryDependencies ++= Seq(
     jdbc,
     "org.seasar.doma" % "doma" % "2.16.1"
