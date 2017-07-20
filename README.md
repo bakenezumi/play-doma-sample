@@ -43,7 +43,7 @@ curl -X DELETE  http://localhost:9000/persons/2
 ### 注意点
 - 注釈処理による自動生成をコンパイル中に実行する必要があるため、3プロジェクト構成になっています。詳細はbuild.sbtを参照。  
   |プロジェクト|内容|
-  |:--|:--|
+  |---|---|
   |domala|Scala用Domaラッパー|
   |dao|注釈処理対象クラス|
   |root (app)|Doma利用アプリケーション|
