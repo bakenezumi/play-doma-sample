@@ -9,7 +9,7 @@ import domala.ScalaDomaConfig
 trait PersonDao {
 
     @Select
-    def selectById(@ParameterName("id") id:Int): java.util.Optional[Person]
+    def selectById(id:Int): java.util.Optional[Person]
 
     @Select
     def selectAll(): java.util.List[Person]

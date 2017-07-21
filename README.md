@@ -53,6 +53,5 @@ curl -X DELETE  http://localhost:9000/persons/2
   - ドメインクラスはcase classで実装できます。（Name.scala参照）
   - エンベッダブルクラスはcase classで実装できます。（Address.scala参照）
   - エンティティクラスはcase classで実装できます。（Person.scala参照)
-  - case classで実装したエンティティクラスはscalaコンパイル時にフィールド名が消去されてしまうため各フィールドにはParameterNameアノテーションが必要です。(どうにかしたい。。)
   - Daoインターフェースはtraitで実装できます。(PersonDao.scala参照)
-  - Daoインターフェースのメソッドはエンティティクラスと同様、パラメータの名称がコンパイル時に消去されるため、ParameterNameアノテーションが必要です。
+
