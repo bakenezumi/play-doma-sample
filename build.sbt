@@ -27,8 +27,9 @@ lazy val dao = project.settings(
       val log = streams.value.log
       log.info("Processing annotations ...")
       val cutSize = (scalaSource in Compile).value.getPath.size + 1
-      val classesToProcess = classes.map(_.getPath.substring(cutSize).replaceFirst("\\.scala", "").replaceAll("\\\\", ".")).mkString(" ")
-      val classpath =  (((dependencyClasspath in Compile).value.files) mkString ";") + ";" + (classDirectory in Compile).value.toString
+      val separator = System.getProperties.getProperty("path.separator")
+      val classesToProcess = classes.map(_.getPath.substring(cutSize).replaceFirst("\\.scala", "").replaceAll("[\\\\/]", ".")).mkString(" ")
+      val classpath =  (((dependencyClasspath in Compile).value.files) mkString separator) + separator + (classDirectory in Compile).value.toString
       val destinationDirectory = (classDirectory in Compile).value
       val command = s"javac -cp $classpath -proc:only -XprintRounds -d $destinationDirectory $classesToProcess"
       executeCommand(command, "Failed to process annotations.", log)
