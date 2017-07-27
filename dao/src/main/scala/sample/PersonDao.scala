@@ -12,6 +12,9 @@ trait PersonDao {
     def selectById(id:Int): java.util.Optional[Person]
 
     @Select
+    def selectWithDeparmentById(id: Int): java.util.Optional[PersonDepartment]
+
+    @Select
     def selectAll(): java.util.List[Person]
 
     @Insert

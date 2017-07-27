@@ -1,9 +1,10 @@
 import org.scalatestplus.play._
+import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.libs.json._
 import play.api.test._
 import play.api.test.Helpers._
 
-class ApplicationSpec extends PlaySpec with OneAppPerTest {
+class ApplicationSpec extends PlaySpec with GuiceOneAppPerTest {
 
   "SampleController" should {
 
@@ -20,6 +21,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"SMITH",
             "age":10,
             "address":{"city":"Tokyo","street":"Yaesu"},
+            "departmentId":1,
             "version":0
           },
           {
@@ -27,6 +29,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"ALLEN",
             "age":20,
             "address":{"city":"Kyoto","street":"Karasuma"},
+            "departmentId":2,
             "version":0
           }
         ]
@@ -45,6 +48,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
           "name":"SMITH",
           "age":10,
           "address":{"city":"Tokyo","street":"Yaesu"},
+          "departmentId":1,
           "version":0
         }
         """))
@@ -56,7 +60,8 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
         {
           "name":"WARD",
           "age":30,
-          "address":{"city":"Fukuoka","street":"Gion"}
+          "address":{"city":"Fukuoka","street":"Gion"},
+          "departmentId":1
         }
         """)
       val person = route(app, FakeRequest(POST, "/persons").withJsonBody(json)).get
@@ -71,6 +76,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"WARD",
             "age":30,
             "address":{"city":"Fukuoka","street":"Gion"},
+            "departmentId":1,
             "version":1
           },
           "count": 1
@@ -86,6 +92,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"SMITH",
             "age":10,
             "address":{"city":"Tokyo","street":"Yaesu"},
+            "departmentId":1,
             "version":0
           },
           {
@@ -93,6 +100,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"ALLEN",
             "age":20,
             "address":{"city":"Kyoto","street":"Karasuma"},
+            "departmentId":2,
             "version":0
           },
           {
@@ -100,6 +108,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"WARD",
             "age":30,
             "address":{"city":"Fukuoka","street":"Gion"},
+            "departmentId":1,
             "version":1
           }
         ]
@@ -114,6 +123,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
           "name":"SMITH",
           "age":40,
           "address":{"city":"Tokyo","street":"Marunouchi"},
+          "departmentId":2,
           "version":0
         }
         """)
@@ -129,6 +139,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"SMITH",
             "age":40,
             "address":{"city":"Tokyo","street":"Marunouchi"},
+            "departmentId":2,
             "version":1
           },
           "count": 1
@@ -144,6 +155,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"SMITH",
             "age":40,
             "address":{"city":"Tokyo","street":"Marunouchi"},
+            "departmentId":2,
             "version":1
           },
           {
@@ -151,6 +163,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"ALLEN",
             "age":20,
             "address":{"city":"Kyoto","street":"Karasuma"},
+            "departmentId":2,
             "version":0
           }
         ]
@@ -171,6 +184,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
             "name":"SMITH",
             "age":10,
             "address":{"city":"Tokyo","street":"Yaesu"},
+            "departmentId":1,
             "version":0
           }
         ]

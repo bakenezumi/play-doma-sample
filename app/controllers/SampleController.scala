@@ -32,9 +32,20 @@ class SampleController @Inject() (val controllerComponents: ControllerComponents
     }
   }
 
+  def selectWithDeparmentById(id: Int) = Action.async {
+    RequiredFuture {
+      dao.selectWithDeparmentById(id)
+    } map { result => 
+      result.asScala match {
+        case Some(person) => Ok(Json.toJson(person))
+        case None => NotFound("not found.")
+      }
+    }
+  }
+
   def selectAll = Action.async {
     RequiredFuture {
-      dao.selectAll() 
+      dao.selectAll()
     } map { persons =>
       Ok(Json.toJson(persons.asScala))
     }

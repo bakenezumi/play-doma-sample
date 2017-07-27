@@ -14,6 +14,7 @@ case class Person(
   name: Name,
   age: OptionalInt,
   address: Address,
+  departmentId: OptionalInt,
   @(Version@field)
   version: OptionalInt = OptionalInt.of(-1)
 )

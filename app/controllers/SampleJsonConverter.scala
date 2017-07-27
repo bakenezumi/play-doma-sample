@@ -35,6 +35,7 @@ object PersonConverter {
     (__ \ "name").write[Name] ~
     (__ \ "age").write[OptionalInt] ~
     (__ \ "address").write[Address] ~
+    (__ \ "departmentId").write[OptionalInt] ~
     (__ \ "version").write[OptionalInt]
   )(unlift(Person.unapply))
   implicit def readsPerson = (
@@ -42,8 +43,22 @@ object PersonConverter {
     (__ \ "name").read[Name] ~
     (__ \ "age").read[OptionalInt] ~
     (__ \ "address").read[Address] ~
+    (__ \ "departmentId").read[OptionalInt] ~
     ((__ \ "version").read[OptionalInt] or Reads.pure(OptionalInt.of(-1)))
   )(Person)
+
+  implicit def writesPersonDepartment =  (
+    (__ \ "id").write[OptionalInt] ~
+    (__ \ "name").write[Name] ~
+    (__ \ "departmentId").write[OptionalInt] ~
+    (__ \ "departmentName").write[Name]
+  )(unlift(PersonDepartment.unapply))
+  implicit def readsPersonDepartment = (
+    ((__ \ "id").read[OptionalInt] or Reads.pure(OptionalInt.empty())) ~
+    (__ \ "name").read[Name] ~
+    (__ \ "departmentId").read[OptionalInt] ~
+    (__ \ "departmentName").read[Name]
+  )(PersonDepartment)
 
   implicit val writesDomaResult = new Writes[Result[Person]] {
     def writes(r: Result[Person]): JsValue = {
