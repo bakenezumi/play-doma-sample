@@ -74,8 +74,7 @@ class SampleController @Inject() (val controllerComponents: ControllerComponents
 
   def delete(id: Int) = Action.async {
     RequiredFuture {
-      val result = dao.selectById(id)
-      result.asScala match {
+      dao.selectById(id).asScala match {
         case Some(person) => dao.delete(person).getCount
         case _ => 0
       }

@@ -24,8 +24,10 @@ class ScalaDomaConfig private (ds: DataSource, dialect: Dialect, naming: Naming)
 
   getSqlFileRepository.clearCache
 
-  val dataSource = new LocalTransactionDataSource(ds)
-
+  val dataSource = ds match {
+    case _: LocalTransactionDataSource => ds.asInstanceOf[LocalTransactionDataSource]
+    case _ => new LocalTransactionDataSource(ds)
+  }
   val transactionManager = new LocalTransactionManager(dataSource.getLocalTransaction(getJdbcLogger))
 
   override def getDataSource = dataSource
